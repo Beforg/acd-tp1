@@ -89,17 +89,45 @@ public class Ordenadores {
             maxHeapify(a,n,maior);
         }
     }
-    private static <T extends Comparable<T>>
+    public static <T extends Comparable<T>>
     void buildMaxHeap(T[] a, int n) {
         for (int i = n/2 -1; i >= 0; i--) {
             maxHeapify(a,n,i);
         }
     }
+
+    private static <T extends Comparable<T>>
+    void quickSort(T[] a, int p, int r) {
+        if (p < r) {
+            int q = partition(a,p,r);
+            quickSort(a,p,q-1);
+            quickSort(a,q+1, r);
+        }
+    }
+
+    private static <T extends Comparable<T>>
+    int partition(T[] a, int p, int r) {
+        T pivo = a[r];
+        int i = p-1;
+
+        for (int j = p; j < r; j++) {
+            if (a[j].compareTo(pivo) <= 0) {
+                i++;
+                T tmp = a[i];
+                a[i] = a[j];
+                a[j] = tmp;
+            }
+        }
+        T tmp = a[i+1];
+        a[i+1] = a[r];
+        a[r] = tmp;
+        return i+1;
+    }
     public static void main(String[] args) {
         Integer[] numeros = {3,1,4,6,2,11,9,5,8};
         Integer[] worstCase = {1,2,3,4,5,6,7,8,9};
         System.out.println("Números antes da ordenação: " + Arrays.toString(numeros));
-        Ordenadores.heapSort(numeros);
+        Ordenadores.quickSort(numeros, 0, 8);
         System.out.println("Números após a ordenação: " + Arrays.toString(numeros));
         System.out.println("Números antes da ordenação: " + Arrays.toString(worstCase));
         Ordenadores.heapSort(worstCase);
