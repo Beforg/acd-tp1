@@ -37,7 +37,7 @@ public class Ordenadores {
 
 
     public static <T extends Comparable<T>>
-    void bubbllesort(T[] a) {
+    void bubblleSort(T[] a) {
         int lenght = a.length;
         boolean trocou = false;
         for (int i = 0; i < lenght -1 ; i++) {
@@ -123,10 +123,58 @@ public class Ordenadores {
         a[r] = tmp;
         return i+1;
     }
+    public static void radixSort(int[] a) {
+        int n = a.length;
+        int maior = encontrarMaior(a);
+
+        for (int exp = 1; maior / exp > 0; exp *= 10) {
+            countingSortPorDigito(a, n, exp);
+        }
+    }
+
+    private static void countingSortPorDigito(int[] a, int n, int exp) {
+        int[] output = new int[n];
+        int[] count = new int[10];
+
+        for (int i = 0; i < n; i++) {
+            int digito = (a[i] / exp) % 10;
+            count[digito]++;
+        }
+
+        for (int i = 1; i < 10; i++) {
+            count[i] += count[i - 1];
+        }
+
+        for (int i = n - 1; i >= 0; i--) {
+            int digito = (a[i] / exp) % 10;
+            output[count[digito] - 1] = a[i];
+            count[digito]--;
+        }
+
+        for (int i = 0; i < n; i++) {
+            a[i] = output[i];
+        }
+    }
+
+    private static int encontrarMaior(int[] a) {
+        int maior = a[0];
+
+        for (int i = 1; i < a.length; i++) {
+            if (a[i] > maior) {
+                maior = a[i];
+            }
+        }
+
+        return maior;
+    }
+
     public static void main(String[] args) {
         Integer[] numeros = {3,1,4,6,2,11,9,5,8};
         Integer[] worstCase = {1,2,3,4,5,6,7,8,9};
-        System.out.println("Números antes da ordenação: " + Arrays.toString(numeros));
+        int[] intRadixSort = {170, 45, 75, 90, 802, 24, 2, 66};
+        System.out.println("Números antes da ordenação: " + Arrays.toString(intRadixSort));
+        Ordenadores.radixSort(intRadixSort);
+        System.out.println("Números após a ordenação: " + Arrays.toString(intRadixSort));
         Ordenadores.quickSort(numeros, 0, 8);
         System.out.println("Números após a ordenação: " + Arrays.toString(numeros));
         System.out.println("Números antes da ordenação: " + Arrays.toString(worstCase));
