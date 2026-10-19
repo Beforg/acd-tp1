@@ -1,4 +1,7 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class Ordenadores {
 
@@ -167,13 +170,65 @@ public class Ordenadores {
 
         return maior;
     }
+    @SuppressWarnings("unchecked")
+    public static void bucketSort(int[] a) {
+        if (a == null || a.length <= 1) {
+            return;
+        }
+
+        int n = a.length;
+        int maior = encontrarMaior(a);
+        int menor = encontrarMenor(a);
+
+        if (maior == menor) {
+            return;
+        }
+
+        int intervalo = (maior - menor) / n + 1;
+
+        @SuppressWarnings("unchecked")
+        List<Integer>[] baldes = new ArrayList[n];
+
+        for (int i = 0; i < n; i++) {
+            baldes[i] = new ArrayList<>();
+        }
+
+        for (int i = 0; i < n; i++) {
+            int indiceBalde = (a[i] - menor) / intervalo;
+            baldes[indiceBalde].add(a[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            Collections.sort(baldes[i]);
+        }
+
+        int index = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (Integer num : baldes[i]) {
+                a[index++] = num;
+            }
+        }
+    }
+
+    private static int encontrarMenor(int[] a) {
+        int menor = a[0];
+
+        for (int i = 1; i < a.length; i++) {
+            if (a[i] < menor) {
+                menor = a[i];
+            }
+        }
+
+        return menor;
+    }
 
     public static void main(String[] args) {
         Integer[] numeros = {3,1,4,6,2,11,9,5,8};
         Integer[] worstCase = {1,2,3,4,5,6,7,8,9};
         int[] intRadixSort = {170, 45, 75, 90, 802, 24, 2, 66};
         System.out.println("Números antes da ordenação: " + Arrays.toString(intRadixSort));
-        Ordenadores.radixSort(intRadixSort);
+        Ordenadores.bucketSort(intRadixSort);
         System.out.println("Números após a ordenação: " + Arrays.toString(intRadixSort));
         Ordenadores.quickSort(numeros, 0, 8);
         System.out.println("Números após a ordenação: " + Arrays.toString(numeros));
