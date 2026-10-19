@@ -5,6 +5,11 @@ import java.util.List;
 
 public class Ordenadores {
 
+    /**
+     * Ordena um array usando o algoritmo de ordenação por inserção (Insertion Sort).
+     * @param a o array a ser ordenado
+     * @param <T> o tipo de elementos do array, que deve implementar a interface Comparable
+     */
     public static <T extends Comparable<T>>
     void insertionSort(T[] a) {
         int n = a.length;
@@ -20,6 +25,11 @@ public class Ordenadores {
         }
     }
 
+    /**
+     * Ordena um array usando o algoritmo de ordenação por seleção (Selection Sort).
+     * @param a o array a ser ordenado
+     * @param <T> o tipo de elementos do array, que deve implementar a interface Comparable
+     */
     public static <T extends Comparable<T>>
     void selectionSort(T[] a) {
         for (int i = 0; i < a.length; i++) {
@@ -39,6 +49,11 @@ public class Ordenadores {
     }
 
 
+    /**
+     * Ordena um array usando o algoritmo de ordenação por bolha (Bubble Sort).
+     * @param a o array a ser ordenado
+     * @param <T> o tipo de elementos do array, que deve implementar a interface Comparable
+     */
     public static <T extends Comparable<T>>
     void bubblleSort(T[] a) {
         int lenght = a.length;
@@ -60,6 +75,12 @@ public class Ordenadores {
         }
 
     }
+
+    /**
+     * Ordena um array usando o algoritmo de ordenação por heap (Heap Sort).
+     * @param a o array a ser ordenado
+     * @param <T> o tipo de elementos do array, que deve implementar a interface Comparable
+     */
     public static <T extends Comparable<T>>
     void heapSort(T[] a) {
         int n = a.length;
@@ -99,6 +120,13 @@ public class Ordenadores {
         }
     }
 
+    /**
+     * Ordena um array usando o algoritmo de ordenação rápida (Quick Sort).
+     * @param a o array a ser ordenado
+     * @param p o índice inicial do subarray a ser ordenado
+     * @param r o índice final do subarray a ser ordenado
+     * @param <T> o tipo de elementos do array, que deve implementar a interface Comparable
+     */
     private static <T extends Comparable<T>>
     void quickSort(T[] a, int p, int r) {
         if (p < r) {
@@ -126,6 +154,11 @@ public class Ordenadores {
         a[r] = tmp;
         return i+1;
     }
+
+    /**
+     * Ordena um array de inteiros usando o algoritmo de ordenação por base (Radix Sort).
+     * @param a o array a ser ordenado
+     */
     public static void radixSort(int[] a) {
         int n = a.length;
         int maior = encontrarMaior(a);
@@ -170,6 +203,11 @@ public class Ordenadores {
 
         return maior;
     }
+
+    /**
+     * Ordena um array de inteiros usando o algoritmo de ordenação por balde (Bucket Sort).
+     * @param a o array a ser ordenado
+     */
     @SuppressWarnings("unchecked")
     public static void bucketSort(int[] a) {
         if (a == null || a.length <= 1) {
@@ -186,7 +224,6 @@ public class Ordenadores {
 
         int intervalo = (maior - menor) / n + 1;
 
-        @SuppressWarnings("unchecked")
         List<Integer>[] baldes = new ArrayList[n];
 
         for (int i = 0; i < n; i++) {
