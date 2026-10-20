@@ -32,18 +32,17 @@ public class Ordenadores {
      */
     public static <T extends Comparable<T>>
     void selectionSort(T[] a) {
-        for (int i = 0; i < a.length; i++) {
+        for (int i = 0; i < a.length - 1; i++) {
             int minIndex = i;
             for (int j = i + 1; j < a.length; j++) {
                 if (a[j].compareTo(a[minIndex]) < 0) {
                     minIndex = j;
                 }
-                if (minIndex != i) {
-                    T temp = a[i];
-                    a[i] = a[minIndex];
-                    a[minIndex] = temp;
-                }
-
+            }
+            if (minIndex != i) {
+                T temp = a[i];
+                a[i] = a[minIndex];
+                a[minIndex] = temp;
             }
         }
     }
@@ -54,27 +53,30 @@ public class Ordenadores {
      * @param a o array a ser ordenado
      * @param <T> o tipo de elementos do array, que deve implementar a interface Comparable
      */
+
     public static <T extends Comparable<T>>
-    void bubblleSort(T[] a) {
-        int lenght = a.length;
-        boolean trocou = false;
-        for (int i = 0; i < lenght -1 ; i++) {
-            System.out.println(i);
-            for (int j = lenght; j > i + 1; j--) {
-                if (a[j - 1].compareTo(a[j - 2]) < 0) {
+    void bubbleSort(T[] a) {
+        int length = a.length;
+
+        for (int i = 0; i < length - 1; i++) {
+            boolean trocou = false;
+
+            for (int j = length - 1; j > i; j--) {
+                if (a[j].compareTo(a[j - 1]) < 0) {
+                    T tmp = a[j];
+                    a[j] = a[j - 1];
+                    a[j - 1] = tmp;
+
                     trocou = true;
-                    T tmp = a[j - 1];
-                    a[j - 1] = a[j - 2];
-                    a[j - 2] = tmp;
-                }
-                if (!trocou) {
-                    System.out.println("Não trocou! interrompendo execução");
-                    return;
                 }
             }
-        }
 
+            if (!trocou) {
+                return;
+            }
+        }
     }
+
 
     /**
      * Ordena um array usando o algoritmo de ordenação por heap (Heap Sort).
@@ -127,7 +129,7 @@ public class Ordenadores {
      * @param r o índice final do subarray a ser ordenado
      * @param <T> o tipo de elementos do array, que deve implementar a interface Comparable
      */
-    private static <T extends Comparable<T>>
+    public static <T extends Comparable<T>>
     void quickSort(T[] a, int p, int r) {
         if (p < r) {
             int q = partition(a,p,r);
