@@ -260,6 +260,107 @@ public class Ordenadores {
         return menor;
     }
 
+    /**
+     * Ordena um array de inteiros usando o algoritmo de ordenação por contagem (Counting Sort).
+     * @param a o array a ser ordenado
+     */
+    public static void countingSort(int[] a) {
+        if (a == null || a.length <= 1) {
+            return;
+        }
+
+        int maior = a[0];
+        int menor = a[0];
+        for (int i = 1; i < a.length; i++) {
+            if (a[i] > maior) maior = a[i];
+            if (a[i] < menor) menor = a[i];
+        }
+
+        int amplitude = maior - menor + 1;
+        int[] count = new int[amplitude];
+        int[] output = new int[a.length];
+
+        for (int i = 0; i < a.length; i++) {
+            count[a[i] - menor]++;
+        }
+
+        for (int i = 1; i < count.length; i++) {
+            count[i] += count[i - 1];
+        }
+        for (int i = a.length - 1; i >= 0; i--) {
+            int valor = a[i];
+            output[count[valor - menor] - 1] = valor;
+            count[valor - menor]--;
+        }
+
+        for (int i = 0; i < a.length; i++) {
+            a[i] = output[i];
+        }
+    }
+    /**
+     * Ordena um array usando o algoritmo de ordenação por fusão (Merge Sort).
+     * @param a o array a ser ordenado
+     * @param <T> o tipo de elementos do array, que deve implementar a interface Comparable
+     */
+    public static <T extends Comparable<T>> void mergeSort(T[] a) {
+        T[] aux = a.clone();
+        mergeSort(a, aux, 0, a.length - 1);
+    }
+
+    private static <T extends Comparable<T>> void mergeSort(T[] a, T[] aux, int lo, int hi) {
+        if (hi <= lo) return;
+        int mid = lo + (hi - lo) / 2;
+        mergeSort(a, aux, lo, mid);
+        mergeSort(a, aux, mid + 1, hi);
+        merge(a, aux, lo, mid, hi);
+    }
+
+    private static <T extends Comparable<T>> void merge(T[] a, T[] aux, int lo, int mid, int hi) {
+        for (int k = lo; k <= hi; k++) {
+            aux[k] = a[k];
+        }
+
+        int i = lo, j = mid + 1;
+        for (int k = lo; k <= hi; k++) {
+            if (i > mid) {
+                a[k] = aux[j++];
+            } else if (j > hi) {
+                a[k] = aux[i++];
+            } else if (aux[j].compareTo(aux[i]) < 0) {
+                a[k] = aux[j++];
+            } else {
+                a[k] = aux[i++];
+            }
+        }
+    }
+
+    /**
+     * Ordena um array usando o algoritmo de ordenação Shell Sort.
+     * @param a
+     * @param <T>
+     */
+    public static <T extends Comparable<T>> void shellSort(T[] a) {
+        int n = a.length;
+        int h = 1;
+
+        // Sequência de Knuth: 1, 4, 13, 40, 121...
+        while (h < n / 3) {
+            h = 3 * h + 1;
+        }
+
+        while (h >= 1) {
+            for (int i = h; i < n; i++) {
+                T chave = a[i];
+                int j = i;
+                while (j >= h && a[j - h].compareTo(chave) > 0) {
+                    a[j] = a[j - h];
+                    j -= h;
+                }
+                a[j] = chave;
+            }
+            h /= 3;
+        }
+    }
     public static void main(String[] args) {
         Integer[] numeros = {3,1,4,6,2,11,9,5,8};
         Integer[] worstCase = {1,2,3,4,5,6,7,8,9};
