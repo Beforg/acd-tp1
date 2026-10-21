@@ -363,22 +363,4 @@ public class Ordenadores {
             h /= 3;
         }
     }
-    public static void main(String[] args) {
-        Integer[] numeros = {3,1,4,6,2,11,9,5,8};
-        Integer[] worstCase = {1,2,3,4,5,6,7,8,9};
-        int[] intRadixSort = {170, 45, 75, 90, 802, 24, 2, 66};
-        System.out.println("Números antes da ordenação: " + Arrays.toString(intRadixSort));
-        Ordenadores.bucketSort(intRadixSort);
-        System.out.println("Números após a ordenação: " + Arrays.toString(intRadixSort));
-        Ordenadores.quickSort(numeros, 0, 8);
-        System.out.println("Números após a ordenação: " + Arrays.toString(numeros));
-        System.out.println("Números antes da ordenação: " + Arrays.toString(worstCase));
-        Ordenadores.heapSort(worstCase);
-        System.out.println("Números após a ordenação: " + Arrays.toString(worstCase));
-
-        String[] nomes = {"Ana", "Debora", "Bruno", "Joao", "Carlos"};
-        Ordenadores.insertionSort(nomes);
-        System.out.println("Nomes ordenados:" + Arrays.toString(nomes));
-    }
-
 }
