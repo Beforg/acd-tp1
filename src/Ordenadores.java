@@ -125,16 +125,20 @@ public class Ordenadores {
     /**
      * Ordena um array usando o algoritmo de ordenação rápida (Quick Sort).
      * @param a o array a ser ordenado
-     * @param p o índice inicial do subarray a ser ordenado
-     * @param r o índice final do subarray a ser ordenado
      * @param <T> o tipo de elementos do array, que deve implementar a interface Comparable
      */
-    public static <T extends Comparable<T>>
-    void quickSort(T[] a, int p, int r) {
+    public static <T extends Comparable<T>> void quickSort(T[] a) {
+        if (a != null && a.length > 1) {
+            quickSort(a, 0, a.length - 1);
+        }
+    }
+
+    // 2. Método PRIVADO recursivo (3 parâmetros)
+    private static <T extends Comparable<T>> void quickSort(T[] a, int p, int r) {
         if (p < r) {
-            int q = partition(a,p,r);
-            quickSort(a,p,q-1);
-            quickSort(a,q+1, r);
+            int q = partition(a, p, r);
+            quickSort(a, p, q - 1);
+            quickSort(a, q + 1, r);
         }
     }
 

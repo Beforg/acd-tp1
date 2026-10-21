@@ -40,7 +40,7 @@ public class TestesCorretude {
 
             // Valida Quicksort
             Integer[] arrQuick = original.clone();
-            Ordenadores.quickSort(arrQuick, 0, arrQuick.length - 1);
+            Ordenadores.quickSort(arrQuick);
             validar("Quicksort", arrQuick, esperado);
 
             // Valida Mergesort
