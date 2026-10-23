@@ -133,32 +133,43 @@ public class Ordenadores {
         }
     }
 
-    // 2. Método PRIVADO recursivo (3 parâmetros)
     private static <T extends Comparable<T>> void quickSort(T[] a, int p, int r) {
-        if (p < r) {
-            int q = partition(a, p, r);
-            quickSort(a, p, q - 1);
-            quickSort(a, q + 1, r);
+        while (p < r) {
+            int[] partes = partitionThreeWay(a, p, r);
+            // Recursa sempre no menor intervalo para limitar a pilha.
+            if (partes[0] - p < r - partes[1]) {
+                quickSort(a, p, partes[0] - 1);
+                p = partes[1] + 1;
+            } else {
+                quickSort(a, partes[1] + 1, r);
+                r = partes[0] - 1;
+            }
         }
     }
 
-    private static <T extends Comparable<T>>
-    int partition(T[] a, int p, int r) {
-        T pivo = a[r];
-        int i = p-1;
+    private static <T extends Comparable<T>> int[] partitionThreeWay(T[] a, int p, int r) {
+        T pivo = a[p + (r - p) / 2];
+        int menor = p;
+        int atual = p;
+        int maior = r;
 
-        for (int j = p; j < r; j++) {
-            if (a[j].compareTo(pivo) <= 0) {
-                i++;
-                T tmp = a[i];
-                a[i] = a[j];
-                a[j] = tmp;
+        while (atual <= maior) {
+            int comparacao = a[atual].compareTo(pivo);
+            if (comparacao < 0) {
+                trocar(a, menor++, atual++);
+            } else if (comparacao > 0) {
+                trocar(a, atual, maior--);
+            } else {
+                atual++;
             }
         }
-        T tmp = a[i+1];
-        a[i+1] = a[r];
-        a[r] = tmp;
-        return i+1;
+        return new int[]{menor, maior};
+    }
+
+    private static <T> void trocar(T[] a, int primeiro, int segundo) {
+        T temporario = a[primeiro];
+        a[primeiro] = a[segundo];
+        a[segundo] = temporario;
     }
 
     /**
