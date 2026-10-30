@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Ordenadores {
@@ -253,7 +252,7 @@ public class Ordenadores {
         }
 
         for (int i = 0; i < n; i++) {
-            Collections.sort(baldes[i]);
+            ordenarBalde(baldes[i]);
         }
 
         int index = 0;
@@ -261,6 +260,45 @@ public class Ordenadores {
         for (int i = 0; i < n; i++) {
             for (Integer num : baldes[i]) {
                 a[index++] = num;
+            }
+        }
+    }
+
+    private static void ordenarBalde(List<Integer> balde) {
+        if (balde.size() < 2) {
+            return;
+        }
+
+        List<Integer> auxiliar = new ArrayList<>(balde);
+        ordenarBalde(balde, auxiliar, 0, balde.size() - 1);
+    }
+
+    private static void ordenarBalde(
+            List<Integer> balde, List<Integer> auxiliar, int inicio, int fim) {
+        if (inicio >= fim) {
+            return;
+        }
+
+        int meio = inicio + (fim - inicio) / 2;
+        ordenarBalde(balde, auxiliar, inicio, meio);
+        ordenarBalde(balde, auxiliar, meio + 1, fim);
+
+        for (int i = inicio; i <= fim; i++) {
+            auxiliar.set(i, balde.get(i));
+        }
+
+        int esquerda = inicio;
+        int direita = meio + 1;
+
+        for (int i = inicio; i <= fim; i++) {
+            if (esquerda > meio) {
+                balde.set(i, auxiliar.get(direita++));
+            } else if (direita > fim) {
+                balde.set(i, auxiliar.get(esquerda++));
+            } else if (auxiliar.get(direita) < auxiliar.get(esquerda)) {
+                balde.set(i, auxiliar.get(direita++));
+            } else {
+                balde.set(i, auxiliar.get(esquerda++));
             }
         }
     }
